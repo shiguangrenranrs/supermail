@@ -1,6 +1,8 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="" />
+    <a :href="goodsItem.link">
+      <img :src="goodsItem.show.img" alt="" />
+    </a>
     <div>
       <p>{{ goodsItem.title }}</p>
       <span class="price">{{ goodsItem.price }}</span>
@@ -29,9 +31,17 @@ export default {
 
 <style>
 .goods-item {
-  width: 50%;
-  padding: 20px;
+  /* break-inside: avoid; */
+  width: 44%;
+  /* position: absolute; */
+  /* float: left; */
   text-align: center;
+  /* padding: 3%; */
+  padding: 3% 0;
+}
+.goods-item img{
+  width: 100%;
+  border-radius: 5px;
 }
 .goods-item p {
   overflow: hidden;
@@ -51,9 +61,5 @@ export default {
   width: 14px;
   height: 14px;
   background: url(~assets/img/common/collect.svg) 0 0/14px 14px;
-}
-.goods-item img {
-  width: 100%;
-  border-radius: 5px;
 }
 </style>
