@@ -26,23 +26,27 @@ export default {
       scroll: null,
     };
   },
-  updated() {
-    if (this.scroll === null) {
-      // 避免命名冲突,使用ref
-      this.scroll = new BScroll(this.$refs.wrapper, {
-        click: true,
-        // 控制非表单元素事件
-        probeType: this.probeType,
-        pullUpLoad: this.pullUpLoad,
-      });
-      this.scroll.on("scroll", (position) => {
-        this.$emit("scrolling", position);
-      });
+  mounted() {
+    // Scroll对象，不要反复实例化
+    if (this.scroll != null) {
+      return;
+    }
+    // 避免命名冲突,使用ref
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      click: true,
+      // 控制非表单元素事件
+      probeType: this.probeType,
+      pullUpLoad: this.pullUpLoad,
+      // observeDOM: true,// 也是一种解决方案
+    });
+    this.scroll.on("scroll", (position) => {
+      this.$emit("scrolling", position);
+    });
+    if (this.pullUpLoad) {
       this.scroll.on("pullingUp", () => {
+        console.log("Uping...");
         this.$emit("pullingUp");
       });
-    } else {
-      this.scroll.refresh();
     }
   },
   methods: {
@@ -50,9 +54,12 @@ export default {
       this.scroll.scrollTo(x, y, time);
       console.log("backTop");
     },
-    finishPullUp(){
-      this.scroll.finishPullUp();
-    }
+    finishPullUp() {
+      this.scroll && this.scroll.finishPullUp();
+    },
+    refresh() {
+      this.scroll.refresh();
+    },
   },
 };
 </script>

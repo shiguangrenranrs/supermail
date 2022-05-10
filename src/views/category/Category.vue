@@ -508,7 +508,6 @@
 </template>
 
 <script>
-import BetterScroll from "better-scroll";
 
 export default {
   data() {
@@ -517,17 +516,6 @@ export default {
     };
   },
   mounted() {
-    this.bscroll = new BetterScroll(".wrapper", {
-      probeType: 3,
-      pullUpLoad: true,
-    });
-    this.bscroll.on("scroll", () => {
-      console.log(111);
-    });
-    this.bscroll.on("pullingUp", () => {
-      console.log(2222);
-      // this.bscroll.finish
-    });
   },
   methods: {
     btnClick() {

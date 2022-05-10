@@ -1,7 +1,7 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click.prevent="itemClick()">
     <a :href="goodsItem.link">
-      <img :src="goodsItem.show.img" alt="" />
+      <img :src="goodsItem.show.img" alt="" @load="imageLoad"/>
     </a>
     <div>
       <p>{{ goodsItem.title }}</p>
@@ -25,6 +25,20 @@ export default {
         return {};
       },
     },
+  },
+  methods:{
+    imageLoad(){
+      // 监听图片加载完成，使用事件总线bus发送
+      this.$bus.$emit("itemImageLoad");
+    },
+    itemClick(){
+      this.$router.push('/detail/'+this.goodsItem.iid);// 动态路由方式
+
+      /*this.$router.push({
+        path:"/detail",
+        query:'...'
+      })*/
+    }
   },
 };
 </script>
