@@ -52,6 +52,7 @@ import BackTop from "components/content/backTop/BackTop.vue";
 import { getHomeMultidata, getHomeGoods } from "network/home";
 // 工具函数
 import { debounce } from "common/utils";
+import { itemListenerMixin} from 'common/mixin';
 export default {
   name: "Home",
   data() {
@@ -69,7 +70,6 @@ export default {
       isShowBackTop: false,
       isFixed: false,
       tabOffsetTop: 0,
-      DELAY: 600,
       allowPullLoad: false,
     };
   },
@@ -99,13 +99,12 @@ export default {
   },
   mounted() {
     // 3.监听图片加载完成
-    const refresh = debounce(this.$refs.scroll.refresh, this.DELAY);
-    this.$bus.$on("itemImageLoad", () => {
-      refresh();
-      // 至少一张图片请求完成，ajax数据一定已经到位，开始允许懒加载请求
-      this.allowPullLoad = true;
-    });
+    // mixin混入
   },
+  deactivated() {
+    this.$bus.$off("itemImageLoad", this.itemImageLoad);
+  },
+  mixins:[itemListenerMixin],
   methods: {
     /**
      * 网络请求

@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .base-info {
   padding: 1% 1% 5%;
   background-color: #fff;

@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click.prevent="itemClick()">
     <a :href="goodsItem.link">
-      <img :src="goodsItem.show.img" alt="" @load="imageLoad"/>
+      <img :src="showImage" alt="" @load="imageLoad"/>
     </a>
     <div>
       <p>{{ goodsItem.title }}</p>
@@ -40,6 +40,11 @@ export default {
       })*/
     }
   },
+  computed:{
+    showImage(){
+      return this.goodsItem.image || this.goodsItem.show.img;
+    }
+  }
 };
 </script>
 

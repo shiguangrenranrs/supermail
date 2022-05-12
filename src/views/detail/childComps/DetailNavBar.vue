@@ -34,6 +34,7 @@ export default {
   methods: {
     titleClick(index) {
       this.currentTitle = index;
+      this.$emit('titleClick',index);
     },
     backClick(){
       this.$router.back();
@@ -44,9 +45,6 @@ export default {
 </script>
 
 <style scoped>
-.nav-bar{
-  background-color: #fff;
-}
 .title {
   display: flex;
   flex-wrap: nowrap;

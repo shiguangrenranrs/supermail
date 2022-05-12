@@ -1,5 +1,5 @@
 <template>
-  <div class="goods" ref="container">
+  <div class="goods" ref="container" v-if="goods.length !== 0">
     <goods-list-item
       v-for="item in goods"
       :key="item.link"
@@ -72,10 +72,6 @@ export default {
 
 <style>
 .goods {
-  /* column-width: 160px; */
-  /* padding-top: 8px; */
-  /* column-gap: 0; */
-  /* position: relative; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;

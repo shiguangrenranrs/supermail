@@ -35,7 +35,6 @@
     <div class="shop-bottom">
       <div class="title">进店逛逛</div>
     </div>
-    <pre style="width: 100%; overflow: hidden">{{ shop }}</pre>
   </div>
 </template>
 
