@@ -68,4 +68,10 @@ export default {
 .info-param table td:nth-of-type(2){
   color: var(--color-tint);
 }
+.info-param table tr td:nth-of-type(1){
+  min-width: 42px;
+}
+.info-image img{
+  width: 100%;
+}
 </style>

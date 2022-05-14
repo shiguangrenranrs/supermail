@@ -52,7 +52,7 @@ import BackTop from "components/content/backTop/BackTop.vue";
 import { getHomeMultidata, getHomeGoods } from "network/home";
 // 工具函数
 import { debounce } from "common/utils";
-import { itemListenerMixin} from 'common/mixin';
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 export default {
   name: "Home",
   data() {
@@ -67,10 +67,10 @@ export default {
         sell: { page: 0, list: [] },
       },
       currentType: "pop",
-      isShowBackTop: false,
       isFixed: false,
       tabOffsetTop: 0,
       allowPullLoad: false,
+      // 控制逻辑在混入里
     };
   },
   components: {
@@ -81,8 +81,6 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    Scroll,
-    BackTop,
   },
   computed: {
     showGoods() {
@@ -104,7 +102,7 @@ export default {
   deactivated() {
     this.$bus.$off("itemImageLoad", this.itemImageLoad);
   },
-  mixins:[itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   methods: {
     /**
      * 网络请求
@@ -119,6 +117,7 @@ export default {
     },
     getHomeGoods(type, isUp = false) {
       if (isUp && !this.allowPullLoad) {
+        // 初始 allowPullLoad=false 阻止懒加载请求
         this.$refs.scroll.finishPullUp();
         return;
       }
@@ -129,33 +128,23 @@ export default {
           this.goods[type].page++;
           // 是否已请求完所有数据!
 
-          // 请求到数据 再 完成
-          // 略微延时一点吧? 当上一次请求完成，再允许请求下一次
           if (isUp) {
+            // 上次懒加载请求就绪后，2倍时延，允许下次请求
             setTimeout(() => {
               this.$refs.scroll.finishPullUp();
               console.log(
                 "upFinished",
                 this.goods[this.currentType].list.length
               );
-            }, this.DELAY + 50);
+            }, this.DELAY * 2);
           }
         })
         .catch((err) => {
           console.error("请求数据失败:", err);
           // 给个 toast!
         });
-      // console.log("被锁住", this.sync, isUp);
-      /* 当且仅当：this.sync=false,isUp=true
-       * 即刚进入页面，首批数据还未请求完成，又追加懒加载请求时
-       * 为避免请求相同的一批数据，需要阻止此次懒加载请求
-       * 稍后finishPullUp，释放允许后续的懒加载请求
-       * ... 还有一种办法是，在载入页面首次请求的一段时间内，不允许懒加载请求
-       */
     },
-    /**
-     * 事件监听
-     */
+    // 事件监听
     tabClick(index) {
       switch (index) {
         case 0:
@@ -171,13 +160,9 @@ export default {
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
-    backTop() {
-      this.$refs.scroll.scrollTo(0, 0);
-    },
     contentScroll(position) {
-      // console.log(position);
-      // 判断backTop是否显示
-      this.isShowBackTop = -position.y > 1000;
+      // 判断backTop是否显示:混入
+      this.listenBackTop(position);
       // tabcontrol是否吸顶
       this.isFixed = -position.y > this.offsetTop;
     },

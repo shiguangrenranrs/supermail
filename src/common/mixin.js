@@ -1,12 +1,13 @@
 import { debounce } from "./utils";
+import BackTop from 'components/content/backTop/BackTop';
 export const itemListenerMixin = {
-  data(){
+  data() {
     return {
-      DELAY: 600,
-      // itemImageLoad: null,
+      DELAY: 100,
+      itemImageLoad: null,
     }
   },
-  mounted(){
+  mounted() {
     const refresh = debounce(this.$refs.scroll.refresh, this.DELAY);
     this.itemImageLoad = () => {
       refresh();
@@ -17,4 +18,25 @@ export const itemListenerMixin = {
     };
     this.$bus.$on("itemImageLoad", this.itemImageLoad);
   }
+}
+
+export const backTopMixin = {
+  data() {
+    return {
+      isShowBackTop: false,
+    }
+  },
+  components: {
+    BackTop
+  },
+  methods: {
+    backTop() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
+    listenBackTop(position) {
+      this.isShowBackTop = -position.y > 1000;
+    }
+  }
+  // 只能混入，vue API 如：生命周期函数、methods、data、等
+  // 不能对 方法进行混入
 }
