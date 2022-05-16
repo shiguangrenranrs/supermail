@@ -33,7 +33,7 @@ export default {
       this.isCollected = !this.isCollected;
     },
     addToCart(){
-      
+      this.$emit("addCart");
     }
   },
 };
@@ -82,8 +82,10 @@ export default {
 .bottom-bar .bar-right {
   display: flex;
   line-height: 49px;
+  font-weight: bold;
+  font-size: 14px;
 }
-.bottom-bar .bar-right > {
+.bottom-bar .bar-right>div{
   flex: 1;
 }
 .bottom-bar .bar-right .cart {

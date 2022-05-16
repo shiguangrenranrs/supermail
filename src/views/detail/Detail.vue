@@ -20,7 +20,7 @@
       <detail-comment-info :comment-info="commentInfo" ref="comment" />
       <goods-list :goods="recommends" ref="recommend" />
     </scroll>
-    <detail-bottom-bar />
+    <detail-bottom-bar @addCart="addToCart()" />
     <back-top @click.native="backTop()" v-show="isShowBackTop" />
   </div>
 </template>
@@ -109,7 +109,6 @@ export default {
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 44);
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 44);
       this.themeTopYs.push(Number.MAX_VALUE);
-      console.log(this.themeTopYs);
     }, 100);
   },
   mounted() {},
@@ -123,7 +122,6 @@ export default {
       this.getThemeTopY();
     },
     titleClick(index) {
-      console.log(index);
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 300);
     },
     contentScroll(position) {
@@ -151,6 +149,15 @@ export default {
          */
         this.listenBackTop(position);
       }
+    },
+    addToCart() {
+      let product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.nowPrice;
+      product.iid = this.iid;
+      this.$store.dispatch("addCart", product);
     },
   },
   components: {

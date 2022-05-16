@@ -47,7 +47,6 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl.vue";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
-import BackTop from "components/content/backTop/BackTop.vue";
 // 网络请求
 import { getHomeMultidata, getHomeGoods } from "network/home";
 // 工具函数
