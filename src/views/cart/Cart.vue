@@ -4,12 +4,14 @@
       <div slot="center">购物车({{ cartLength }})</div>
     </nav-bar>
     <cart-list></cart-list>
+    <cart-aggregate />
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
 import CartList from "./childComps/CartList";
+import CartAggregate from "./childComps/CartAggregate";
 
 import { mapGetters } from "vuex";
 export default {
@@ -25,12 +27,13 @@ export default {
   components: {
     NavBar,
     CartList,
+    CartAggregate,
   },
 };
 </script>
 
 <style scoped>
-.cart{
+.cart {
   height: 100vh;
 }
 .nav-bar {

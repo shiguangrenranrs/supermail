@@ -7,7 +7,8 @@ export const itemListenerMixin = {
       itemImageLoad: null,
     }
   },
-  mounted() {
+  activated() {
+    console.log("activated");
     const refresh = debounce(this.$refs.scroll.refresh, this.DELAY);
     this.itemImageLoad = () => {
       refresh();
