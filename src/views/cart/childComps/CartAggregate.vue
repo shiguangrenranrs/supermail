@@ -5,7 +5,7 @@
       <span>全选</span>
     </div>
     <div class="sum-price">合计:￥{{ sumPrice }}</div>
-    <div class="settle">去结算({{ caculate }})</div>
+    <div class="settle" @click="settleClick()">去结算({{ caculate }})</div>
   </div>
 </template>
 
@@ -28,6 +28,11 @@ export default {
         this.cartList.forEach((item) => {
           item.checked = true;
         });
+      }
+    },
+    settleClick() {
+      if (this.caculate <= 0) {
+        this.$toast.show("当前没有选择任何商品");
       }
     },
   },

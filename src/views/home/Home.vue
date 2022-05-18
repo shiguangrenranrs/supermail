@@ -52,6 +52,7 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 // 工具函数
 import { debounce } from "common/utils";
 import { itemListenerMixin, backTopMixin } from "common/mixin";
+// toast
 export default {
   name: "Home",
   data() {

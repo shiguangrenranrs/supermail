@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click.prevent="itemClick()">
     <a :href="goodsItem.link">
-      <img :src="showImage" alt="" @load="imageLoad"/>
+      <img v-lazy="showImage" alt="" @load="imageLoad"/>
     </a>
     <div>
       <p>{{ goodsItem.title }}</p>

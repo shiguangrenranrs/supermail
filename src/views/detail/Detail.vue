@@ -35,11 +35,11 @@ import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamsInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
 import DetailBottomBar from "./childComps/DeatilBottomBar";
-
+// 推荐复用主页组件
 import GoodsList from "components/content/goods/GoodsList";
-
+// 滚动
 import Scroll from "components/common/scroll/Scroll";
-
+// 混入
 import { itemListenerMixin, backTopMixin } from "common/mixin";
 // 网络请求，数据结构类
 import {
@@ -49,7 +49,11 @@ import {
   Shop,
   GoodsParam,
 } from "network/detail";
+// 工具类，防抖
 import { debounce } from "common/utils";
+// Vuex，action
+import { mapActions } from "vuex";
+// toast
 export default {
   name: "Detail",
   data() {
@@ -150,6 +154,9 @@ export default {
         this.listenBackTop(position);
       }
     },
+    ...mapActions({
+      addCart_action: "addCart",
+    }),
     addToCart() {
       let product = {};
       product.image = this.topImages[0];
@@ -157,7 +164,12 @@ export default {
       product.desc = this.goods.desc;
       product.price = this.goods.nowPrice;
       product.iid = this.iid;
-      this.$store.dispatch("addCart", product);
+      // this.$store.dispatch("addCart", product).then((res) => {
+      //   console.log(res);
+      // });
+      this.addCart_action(product).then((res) => {
+        this.$toast.show(res);
+      });
     },
   },
   components: {
