@@ -33,6 +33,8 @@ export default {
     settleClick() {
       if (this.caculate <= 0) {
         this.$toast.show("当前没有选择任何商品");
+      }else{
+        this.$toast.show("余额不足，无法购买");
       }
     },
   },

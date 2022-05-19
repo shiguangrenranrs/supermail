@@ -1,13 +1,15 @@
 <template>
-  <h2>我的</h2>
+  <h1>我的</h1>
 </template>
 
 <script>
 export default {
-
-}
+  name: "Profile",
+};
 </script>
 
-<style>
-
+<style scoped>
+h1 {
+  text-align: center;
+}
 </style>

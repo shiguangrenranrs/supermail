@@ -132,16 +132,19 @@ export default {
             // 上次懒加载请求就绪后，2倍时延，允许下次请求
             setTimeout(() => {
               this.$refs.scroll.finishPullUp();
-              console.log(
-                "upFinished",
-                this.goods[this.currentType].list.length
-              );
+              // console.log(
+              //   "upFinished",
+              //   this.goods[this.currentType].list.length
+              // );
             }, this.DELAY * 2);
           }
         })
         .catch((err) => {
-          console.error("请求数据失败:", err);
-          // 给个 toast!
+          this.$toast.show("请求数据失败");
+          console.log(err);
+          setTimeout(() => {
+            this.$refs.scroll.finishPullUp();
+          }, this.DELAY * 2);
         });
     },
     // 事件监听
@@ -170,7 +173,7 @@ export default {
       this.getHomeGoods(this.currentType, true);
     },
     swiperImageLoaded() {
-      console.log(this.$refs.tabControl2.$el.offsetTop);
+      // console.log(this.$refs.tabControl2.$el.offsetTop);
       this.offsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
   },

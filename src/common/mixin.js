@@ -8,7 +8,6 @@ export const itemListenerMixin = {
     }
   },
   activated() {
-    console.log("activated");
     const refresh = debounce(this.$refs.scroll.refresh, this.DELAY);
     this.itemImageLoad = () => {
       refresh();

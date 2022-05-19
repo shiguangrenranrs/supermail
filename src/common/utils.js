@@ -2,8 +2,7 @@ export function debounce(f, ms) {
   let timer = null;
   return function () {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      console.log("refresh");f.apply(this, arguments)}, ms);
+    timer = setTimeout(() => { f.apply(this, arguments) }, ms);
   };
 }
 
@@ -27,7 +26,7 @@ export function formatDate(date, fmt) {
   return fmt;
 };
 
-function padLeftZero (str) {
+function padLeftZero(str) {
   return ('00' + str).substr(str.length);
 };
 
